@@ -28,16 +28,16 @@ function handleSubmit(event) {
     const delay = initialDelay + i * step;
     return createPromise(position, delay).then(
       ({ position, delay }) => {
-        Notiflix.Notify.Success(`✅ Fulfilled promise ${position} in ${delay}ms`);
+        Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
       },
       ({ position, delay }) => {
-        Notiflix.Notify.Failure(`❌ Rejected promise ${position} in ${delay}ms`);
+        Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
       }
     );
   });
 
   Promise.all(promises).then(() => {
-    Notiflix.Notify.Info(`All promises resolved successfully.`);
+    Notiflix.Notify.info(`All promises resolved successfully.`);
   });
 }
 
