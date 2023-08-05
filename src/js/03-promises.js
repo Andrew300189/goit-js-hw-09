@@ -19,16 +19,18 @@ function handleSubmit(event) {
 
   // Получаем значения из полей формы
   const form = event.target;
-  const delay = parseInt(form.elements.delay.value);
+  const initialDelay = parseInt(form.elements.delay.value);
   const step = parseInt(form.elements.step.value);
   const amount = parseInt(form.elements.amount.value);
 
   // Очищаем консоль перед новыми сообщениями
   console.clear();
 
-  // Создаем промисы с заданными значениями
-  for (let i = 1; i <= amount; i++) {
-    createPromise(i, delay).then(
+  // Создаем массив промисов с заданными значениями и уникальными задержками
+  const promises = Array.from({ length: amount }, (_, i) => {
+    const position = i + 1;
+    const delay = initialDelay + i * step;
+    return createPromise(position, delay).then(
       ({ position, delay }) => {
         Notiflix.Notify.Success(`✅ Fulfilled promise ${position} in ${delay}ms`);
       },
@@ -36,6 +38,14 @@ function handleSubmit(event) {
         Notiflix.Notify.Failure(`❌ Rejected promise ${position} in ${delay}ms`);
       }
     );
-    delay += step;
-  }
+  });
+
+  // Ожидаем выполнения всех промисов и отображаем уведомления
+  Promise.all(promises).then(() => {
+    Notiflix.Notify.Info(`All promises resolved successfully.`);
+  });
 }
+
+// Получаем форму и назначаем обработчик события сабмита
+const form = document.querySelector('.form');
+form.addEventListener('submit', handleSubmit);
