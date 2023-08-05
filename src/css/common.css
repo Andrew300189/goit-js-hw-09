@@ -1,0 +1,134 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #fafafa;
+  color: #212121;
+  line-height: 1.5;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.form {
+  display: flex;
+  margin: 0 auto;
+  align-items: center;
+  flex-direction: row;
+}
+
+input {
+  font-size: 16px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  outline: none;
+}
+
+.button-02,
+.button-03 {
+  font-size: 16px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Стили при наведении на кнопки */
+.button-02:hover,
+.button-03:hover {
+  background-color: #0056b3;
+}
+
+/* Стили для таймера */
+.timer {
+  display: flex;
+  justify-content: left;
+  margin-top: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.value {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.label {
+  font-size: 16px;
+  text-transform: uppercase;
+  color: #333;
+}
+
+/* Стили для flatpickr */
+.flatpickr-calendar {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 1px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.flatpickr-day.selected {
+  background-color: #007bff !important;
+  color: #fff;
+}
+
+.flatpickr-time {
+  font-size: 16px;
+}
+
+.button-01 {
+  font-size: 20px;
+  padding: 15px 25px;
+  border: none;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+  width: 150px;
+  text-align: center;
+  justify-content: center;
+  text-transform: uppercase;
+  margin-right: 10px;
+}
+
+.button-01.active {
+  background-color: #ddd;
+  color: #212121;
+}
+
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+
+.goback{
+  font-size: 20px;
+}
+.goback:hover{
+  background-color: palegoldenrod;
+  color: grey;
+}
+
+
+
+
