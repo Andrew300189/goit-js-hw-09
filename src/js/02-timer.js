@@ -5,14 +5,14 @@ import "flatpickr/dist/flatpickr.min.css";
 // Импортируем notiflix
 import Notiflix from "notiflix";
 
-// Опции для flatpickr
+let selectedDate;
 const options = {
   enableTime: true,
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    const selectedDate = selectedDates[0];
+    selectedDate = selectedDates[0];
     const currentDate = new Date();
 
     if (selectedDate <= currentDate) {
@@ -28,14 +28,22 @@ const options = {
 const flatpickrInstance = flatpickr("#datetime-picker", options);
 
 const startButton = document.querySelector("[data-start]");
+const resetButton = document.querySelector("[data-reset]");
 const timer = document.querySelector(".timer");
 let intervalId = null;
 
 startButton.addEventListener("click", () => {
   if (intervalId) return;
 
-  const selectedDate = flatpickrInstance.selectedDates[0]; // Используем ранее созданный экземпляр flatpickr
   const currentDate = new Date();
+  const selectedDateInput = document.querySelector("#datetime-picker").value;
+
+  if (!selectedDateInput) {
+    Notiflix.Notify.failure("Please choose a date first");
+    return;
+  }
+
+  const selectedDate = new Date(selectedDateInput);
 
   if (selectedDate <= currentDate) {
     Notiflix.Notify.failure("Please choose a date in the future");
@@ -45,10 +53,18 @@ startButton.addEventListener("click", () => {
   intervalId = setInterval(updateTimer, 1000);
   updateTimer();
   startButton.disabled = true;
+  document.querySelector("#datetime-picker").setAttribute("disabled", "disabled");
+});
+
+resetButton.addEventListener("click", () => {
+  clearInterval(intervalId);
+  intervalId = null;
+  startButton.disabled = false;
+  document.querySelector("#datetime-picker").removeAttribute("disabled");
+  resetTimer();
 });
 
 function updateTimer() {
-  const selectedDate = flatpickrInstance.selectedDates[0]; // Используем ранее созданный экземпляр flatpickr
   const currentDate = new Date();
   const timeDifference = selectedDate - currentDate;
 
@@ -56,6 +72,10 @@ function updateTimer() {
     clearInterval(intervalId);
     intervalId = null;
     startButton.disabled = false;
+    document.querySelector("#datetime-picker").removeAttribute("disabled");
+    resetButton.disabled = true;
+    renderTime({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+    return;
   }
 
   const time = convertMs(timeDifference);
@@ -90,4 +110,13 @@ function renderTime(time) {
 
 function addLeadingZero(value) {
   return String(value).padStart(2, "0");
+}
+
+function resetTimer() {
+  clearInterval(intervalId);
+  intervalId = null;
+  startButton.disabled = false;
+  document.querySelector("#datetime-picker").removeAttribute("disabled");
+  flatpickrInstance.clear();
+  renderTime({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 }

@@ -21,6 +21,11 @@ function handleSubmit(event) {
   const step = parseInt(form.elements.step.value);
   const amount = parseInt(form.elements.amount.value);
 
+  if (step <= 0 || delay <= 0 || amount <= 0) {
+    Notiflix.Notify.failure('Step, delay, and amount should be greater than zero.');
+    return;
+  }
+
   console.clear();
 
   const promises = Array.from({ length: amount }, (_, i) => {
